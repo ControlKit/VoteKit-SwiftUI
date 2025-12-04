@@ -1,0 +1,33 @@
+//
+//  VoteViewStyle.swift
+//
+//
+//  Created by Maziar Saadatfar on 10/12/23.
+//
+
+import Foundation
+import UIKit
+import ControlKitBase
+
+public enum VoteViewStyle {
+    case fullscreen1
+    case popover1
+    case popover2
+    case popover3
+    case popover4
+    
+    public static func getViewConfigWithStyle(style: VoteViewStyle, lang: CKLanguage) -> VoteViewConfig {
+        switch style {
+        case .fullscreen1:
+            FullScreen1VoteViewConfig(lang: lang)
+        case .popover1:
+            Popover1VoteViewConfig(lang: lang)
+        case .popover2:
+            Popover2VoteViewConfig(lang: lang)
+        case .popover3:
+            Popover3VoteViewConfig(lang: lang)
+        case .popover4:
+            Popover4VoteViewConfig(lang: lang)
+        }
+    }
+}
