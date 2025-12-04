@@ -23,88 +23,90 @@ public struct VoteView: View {
     }
     
     public var body: some View {
-        Group {
-            switch config.viewConfig.style {
-            case .fullscreen1:
-                VoteViewFullScreen1(
-                    viewModel: viewModel,
-                    config: config.viewConfig,
-                    showSuccessAlert: $showSuccessAlert,
-                    showErrorAlert: $showErrorAlert,
-                    errorMessage: $errorMessage,
-                    onDismiss: {
-                        viewModel.setAction(.cancel)
-                        dismiss()
-                    },
-                    onSubmit: {
-                        submitVote()
-                    }
-                )
-            case .popover1:
-                VoteViewPopover1(
-                    viewModel: viewModel,
-                    config: config.viewConfig,
-                    showSuccessAlert: $showSuccessAlert,
-                    showErrorAlert: $showErrorAlert,
-                    errorMessage: $errorMessage,
-                    onDismiss: {
-                        viewModel.setAction(.cancel)
-                        dismiss()
-                    },
-                    onSubmit: {
-                        submitVote()
-                    }
-                )
-            case .popover2:
-                VoteViewPopover2(
-                    viewModel: viewModel,
-                    config: config.viewConfig,
-                    showSuccessAlert: $showSuccessAlert,
-                    showErrorAlert: $showErrorAlert,
-                    errorMessage: $errorMessage,
-                    onDismiss: {
-                        viewModel.setAction(.cancel)
-                        dismiss()
-                    },
-                    onSubmit: {
-                        submitVote()
-                    }
-                )
-            case .popover3:
-                VoteViewPopover3(
-                    viewModel: viewModel,
-                    config: config.viewConfig,
-                    showSuccessAlert: $showSuccessAlert,
-                    showErrorAlert: $showErrorAlert,
-                    errorMessage: $errorMessage,
-                    onDismiss: {
-                        viewModel.setAction(.cancel)
-                        dismiss()
-                    },
-                    onSubmit: {
-                        submitVote()
-                    }
-                )
-            case .popover4:
-                VoteViewPopover4(
-                    viewModel: viewModel,
-                    config: config.viewConfig,
-                    showSuccessAlert: $showSuccessAlert,
-                    showErrorAlert: $showErrorAlert,
-                    errorMessage: $errorMessage,
-                    onDismiss: {
-                        viewModel.setAction(.cancel)
-                        dismiss()
-                    },
-                    onSubmit: {
-                        submitVote()
-                    }
-                )
+        NavigationView {
+            Group {
+                switch config.viewConfig.style {
+                case .fullscreen1:
+                    VoteViewFullScreen1(
+                        viewModel: viewModel,
+                        config: config.viewConfig,
+                        showSuccessAlert: $showSuccessAlert,
+                        showErrorAlert: $showErrorAlert,
+                        errorMessage: $errorMessage,
+                        onDismiss: {
+                            viewModel.setAction(.cancel)
+                            dismiss()
+                        },
+                        onSubmit: {
+                            submitVote()
+                        }
+                    )
+                case .popover1:
+                    VoteViewPopover1(
+                        viewModel: viewModel,
+                        config: config.viewConfig,
+                        showSuccessAlert: $showSuccessAlert,
+                        showErrorAlert: $showErrorAlert,
+                        errorMessage: $errorMessage,
+                        onDismiss: {
+                            viewModel.setAction(.cancel)
+                            dismiss()
+                        },
+                        onSubmit: {
+                            submitVote()
+                        }
+                    )
+                case .popover2:
+                    VoteViewPopover2(
+                        viewModel: viewModel,
+                        config: config.viewConfig,
+                        showSuccessAlert: $showSuccessAlert,
+                        showErrorAlert: $showErrorAlert,
+                        errorMessage: $errorMessage,
+                        onDismiss: {
+                            viewModel.setAction(.cancel)
+                            dismiss()
+                        },
+                        onSubmit: {
+                            submitVote()
+                        }
+                    )
+                case .popover3:
+                    VoteViewPopover3(
+                        viewModel: viewModel,
+                        config: config.viewConfig,
+                        showSuccessAlert: $showSuccessAlert,
+                        showErrorAlert: $showErrorAlert,
+                        errorMessage: $errorMessage,
+                        onDismiss: {
+                            viewModel.setAction(.cancel)
+                            dismiss()
+                        },
+                        onSubmit: {
+                            submitVote()
+                        }
+                    )
+                case .popover4:
+                    VoteViewPopover4(
+                        viewModel: viewModel,
+                        config: config.viewConfig,
+                        showSuccessAlert: $showSuccessAlert,
+                        showErrorAlert: $showErrorAlert,
+                        errorMessage: $errorMessage,
+                        onDismiss: {
+                            viewModel.setAction(.cancel)
+                            dismiss()
+                        },
+                        onSubmit: {
+                            submitVote()
+                        }
+                    )
+                }
             }
-        }
-        .onAppear {
-            viewModel.setAction(.view)
-        }
+            .onAppear {
+                viewModel.setAction(.view)
+            }   
+        } .navigationBarTitleDisplayMode(.inline)
     }
     
     private func submitVote() {

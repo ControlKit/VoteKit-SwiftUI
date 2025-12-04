@@ -21,7 +21,7 @@ public class VoteKit: Votable {
     @MainActor
     public func configure(
         config: VoteServiceConfig
-    ) async {
+    ) async -> VoteView? {
         let request = VoteRequest(
             appId: config.appId,
             name: config.name,
@@ -29,11 +29,11 @@ public class VoteKit: Votable {
         )
         do {
             guard let response = try await self.getVote(request: request)?.value else {
-                return
+                return nil
             }
             guard let id = response.data?.id,
                   id > UserDefaults.standard.string(forKey: getName(config.name)) ?? String() else {
-                return
+                return nil
             }
             
             let viewModel = DefaultVoteViewModel(
@@ -43,17 +43,12 @@ public class VoteKit: Votable {
             
             let observableViewModel = VoteViewModelObservable(viewModel: viewModel)
             
-            let voteView = VoteView(
+            return VoteView(
                 viewModel: observableViewModel,
                 config: config
             )
-            
-            NavigationView {
-                voteView
-                .navigationBarTitleDisplayMode(.inline)
-            }
         } catch {
-            return
+            return nil
         }
     }
 }
