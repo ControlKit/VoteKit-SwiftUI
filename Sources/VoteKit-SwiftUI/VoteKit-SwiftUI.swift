@@ -21,7 +21,7 @@ public class VoteKit: Votable {
     @MainActor
     public func configure(
         config: VoteServiceConfig
-    ) async -> VoteView? {
+    ) async {
         let request = VoteRequest(
             appId: config.appId,
             name: config.name,
@@ -29,11 +29,11 @@ public class VoteKit: Votable {
         )
         do {
             guard let response = try await self.getVote(request: request)?.value else {
-                return nil
+                return
             }
             guard let id = response.data?.id,
                   id > UserDefaults.standard.string(forKey: getName(config.name)) ?? String() else {
-                return nil
+                return
             }
             
             let viewModel = DefaultVoteViewModel(
@@ -43,33 +43,18 @@ public class VoteKit: Votable {
             
             let observableViewModel = VoteViewModelObservable(viewModel: viewModel)
             
-            return VoteView(
+            let voteView = VoteView(
                 viewModel: observableViewModel,
                 config: config
             )
+            
+            NavigationView {
+                voteView
+                .navigationBarTitleDisplayMode(.inline)
+            }
         } catch {
-            return nil
-        }
-    }
-    
-    @MainActor
-    public func present(
-        in viewController: UIViewController,
-        config: VoteServiceConfig,
-        modalPresentationStyle: UIModalPresentationStyle = .fullScreen
-    ) async {
-        guard let voteView = await configure(config: config) else {
             return
         }
-        
-        let hostingController = UIHostingController(rootView: voteView)
-        hostingController.modalPresentationStyle = modalPresentationStyle
-        
-        if config.viewConfig.style != .fullscreen1 {
-            hostingController.modalPresentationStyle = .overCurrentContext
-        }
-        
-        viewController.present(hostingController, animated: true)
     }
 }
 
