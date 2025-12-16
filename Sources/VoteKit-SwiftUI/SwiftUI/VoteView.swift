@@ -23,25 +23,26 @@ public struct VoteView: View {
     }
     
     public var body: some View {
-        NavigationView {
-            Group {
-                switch config.viewConfig.style {
-                case .fullscreen1:
-                    VoteViewFullScreen1(
-                        viewModel: viewModel,
-                        config: config.viewConfig,
-                        showSuccessAlert: $showSuccessAlert,
-                        showErrorAlert: $showErrorAlert,
-                        errorMessage: $errorMessage,
-                        onDismiss: {
-                            viewModel.setAction(.cancel)
-                            dismiss()
-                        },
-                        onSubmit: {
-                            submitVote()
-                        }
-                    )
-                case .popover1:
+        Group {
+            switch config.viewConfig.style {
+            case .fullscreen1:
+                VoteViewFullScreen1(
+                    viewModel: viewModel,
+                    config: config.viewConfig,
+                    showSuccessAlert: $showSuccessAlert,
+                    showErrorAlert: $showErrorAlert,
+                    errorMessage: $errorMessage,
+                    onDismiss: {
+                        viewModel.setAction(.cancel)
+                        dismiss()
+                    },
+                    onSubmit: {
+                        submitVote()
+                    }
+                )
+                .ignoresSafeArea()
+            case .popover1:
+                NavigationView {
                     VoteViewPopover1(
                         viewModel: viewModel,
                         config: config.viewConfig,
@@ -56,7 +57,10 @@ public struct VoteView: View {
                             submitVote()
                         }
                     )
-                case .popover2:
+                }
+                .navigationBarTitleDisplayMode(.inline)
+            case .popover2:
+                NavigationView {
                     VoteViewPopover2(
                         viewModel: viewModel,
                         config: config.viewConfig,
@@ -71,7 +75,10 @@ public struct VoteView: View {
                             submitVote()
                         }
                     )
-                case .popover3:
+                }
+                .navigationBarTitleDisplayMode(.inline)
+            case .popover3:
+                NavigationView {
                     VoteViewPopover3(
                         viewModel: viewModel,
                         config: config.viewConfig,
@@ -86,7 +93,10 @@ public struct VoteView: View {
                             submitVote()
                         }
                     )
-                case .popover4:
+                }
+                .navigationBarTitleDisplayMode(.inline)
+            case .popover4:
+                NavigationView {
                     VoteViewPopover4(
                         viewModel: viewModel,
                         config: config.viewConfig,
@@ -102,11 +112,12 @@ public struct VoteView: View {
                         }
                     )
                 }
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .onAppear {
-                viewModel.setAction(.view)
-            }   
-        } .navigationBarTitleDisplayMode(.inline)
+        }
+        .onAppear {
+            viewModel.setAction(.view)
+        }
     }
     
     private func submitVote() {

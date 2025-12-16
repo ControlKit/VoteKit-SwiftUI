@@ -132,7 +132,8 @@ public struct VoteViewFullScreen1: View {
             }
             .background(config.popupViewBackColor)
             .cornerRadius(config.popupViewCornerRadius)
-            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
             
             // Alerts
             if showSuccessAlert {
@@ -158,6 +159,7 @@ public struct VoteViewFullScreen1: View {
                 )
             }
         }
+        .ignoresSafeArea()
     }
     
     private var voteOptions: [VoteOption] {
